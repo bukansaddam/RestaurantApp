@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/detail_page.dart';
 import 'package:restaurant_app/model/restaurant.dart';
 
 class HomePage extends StatelessWidget {
@@ -59,7 +58,9 @@ class HomePage extends StatelessWidget {
   Widget _buildRestaurantListItem(BuildContext context, Restaurant restaurant) {
     return Card(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, DetailPage.routeName, arguments: restaurant);
+        },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
