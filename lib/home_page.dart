@@ -70,9 +70,12 @@ class HomePage extends StatelessWidget {
                 aspectRatio: 3 / 2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    restaurant.pictureId,
-                    fit: BoxFit.cover,
+                  child: Hero(
+                    tag: restaurant.pictureId,
+                    child: Image.network(
+                      restaurant.pictureId,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
