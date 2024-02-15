@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
       initialRoute: HomePage.routeName,
       routes: {
         HomePage.routeName: (context) => const HomePage(),
-        DetailPage.routeName: (context) => DetailPage(
-          restaurant: ModalRoute.of(context)?.settings.arguments as Restaurant,
-        ),
+        // DetailPage.routeName: (context) => DetailPage(
+        //   id: ModalRoute.of(context)?.settings.arguments as String,
+        // ),
       },
     );
   }

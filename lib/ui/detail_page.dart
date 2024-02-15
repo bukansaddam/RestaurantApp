@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/data/model/restaurant.dart';
 
 class DetailPage extends StatelessWidget {
   static const routeName = "/detail_page";
 
-  final Restaurant restaurant;
+  final String id;
 
-  const DetailPage({Key? key, required this.restaurant}) : super(key: key);
+  const DetailPage({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
