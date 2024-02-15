@@ -13,7 +13,7 @@ class CardRestaurant extends StatelessWidget {
       child: Card(
         child: InkWell(
           onTap: () {
-            // Navigator.pushNamed(context, DetailPage.routeName, arguments: restaurant.id);
+            Navigator.pushNamed(context, DetailPage.routeName, arguments: restaurant.id);
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
