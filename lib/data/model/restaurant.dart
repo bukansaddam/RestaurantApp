@@ -29,6 +29,15 @@ DetailRestaurant parseDetailRestaurant(String? json) {
   return DetailRestaurant.fromJson(restaurantJson);
 }
 
+List<SearchRestaurant> parseSearchRestaurants(String? json) {
+  if (json == null) {
+    return [];
+  }
+  final Map<String, dynamic> parsed = jsonDecode(json);
+  List<dynamic> restaurant = parsed['restaurant'];
+  return restaurant.map((json) => SearchRestaurant.fromJson(json)).toList();
+}
+
 class RestaurantResult {
   bool error;
   String message;
@@ -185,4 +194,49 @@ class Menus {
         drinks: List<Category>.from(
             json["drinks"].map((x) => Category.fromJson(x))),
       );
+}
+
+class SearchRestaurantResult {
+  bool error;
+  int founded;
+  List<Restaurant> restaurants;
+
+  SearchRestaurantResult({
+    required this.error,
+    required this.founded,
+    required this.restaurants,
+  });
+
+  factory SearchRestaurantResult.fromJson(Map<String, dynamic> json) => SearchRestaurantResult(
+    error: json["error"],
+    founded: json["founded"],
+    restaurants: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
+  );
+}
+
+class SearchRestaurant {
+  String id;
+  String name;
+  String description;
+  String pictureId;
+  String city;
+  double rating;
+
+  SearchRestaurant({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.pictureId,
+    required this.city,
+    required this.rating,
+  });
+
+  factory SearchRestaurant.fromJson(Map<String, dynamic> json) => SearchRestaurant(
+    id: json["id"],
+    name: json["name"],
+    description: json["description"],
+    pictureId: json["pictureId"],
+    city: json["city"],
+    rating: json["rating"]?.toDouble(),
+  );
 }
