@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
-import 'package:restaurant_app/provider/DetailRestaurantProvider.dart';
+import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 
 class DetailPage extends StatelessWidget {
   static const routeName = "/detail_page";
@@ -29,9 +29,13 @@ class DetailPage extends StatelessWidget {
               ),
             );
           } else if (state.state == ResultState.error) {
-            return Center(
-              child: Material(
-                child: Text(state.message),
+            return SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: const Center(
+                child: Material(
+                  child: Text("Gagal memuat data"),
+                ),
               ),
             );
           } else {
@@ -82,7 +86,7 @@ class DetailPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
           Padding(
@@ -90,12 +94,26 @@ class DetailPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  restaurant.name,
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      restaurant.name,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Wrap(
+                      direction: Axis.horizontal,
+                      children: [
+                        const Icon(Icons.star,color: Colors.yellow,),
+                        Text(
+                          restaurant.rating.toString()
+                        )
+                      ],
+                    )
+                  ],
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,

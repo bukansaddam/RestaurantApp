@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/provider/RestaurantProvider.dart';
+import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/ui/widgets/card_restaurant.dart';
 
@@ -78,9 +78,9 @@ class HomePage extends StatelessWidget {
             ),
           );
         } else if (state.state == ResultState.error) {
-          return Center(
+          return const Center(
             child: Material(
-              child: Text(state.message),
+              child: Text("Gagal memuat data"),
             ),
           );
         } else {
