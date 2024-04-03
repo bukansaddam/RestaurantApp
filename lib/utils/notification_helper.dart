@@ -47,7 +47,6 @@ class NotificationHelper {
   Future<void> showNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
       RestaurantResult restaurant) async {
-
     var channelId = '1';
     var channelName = 'channel_01';
     var channelDescription = "restaurant app channel";

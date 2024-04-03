@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/result_state.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
+import 'package:restaurant_app/ui/bookmark_page.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/ui/setting_page.dart';
 import 'package:restaurant_app/ui/widgets/card_restaurant.dart';
@@ -11,7 +12,7 @@ import 'package:restaurant_app/utils/notification_helper.dart';
 class HomePage extends StatefulWidget {
   static const routeName = "/home_page";
 
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,6 +22,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: () {
+          Navigator.pushNamed(context, BookmarkPage.routeName);
+        },
+        child: const Icon(
+          Icons.bookmark,
+          color: Colors.red,
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/result_state.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/provider/database_provider.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 
 class DetailPage extends StatelessWidget {
@@ -10,28 +11,32 @@ class DetailPage extends StatelessWidget {
 
   final String id;
 
-  const DetailPage({Key? key, required this.id}) : super(key: key);
+  const DetailPage({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => DetailRestaurantProvider(id, apiService: ApiService()),
-      child: Consumer<DetailRestaurantProvider>(
-        builder: (context, state, _) {
-          if (state.state == ResultState.loading) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => DetailRestaurantProvider(id, apiService: ApiService()),
+        )
+      ],
+      child: Consumer2<DetailRestaurantProvider, DatabaseProvider>(
+        builder: (context, detailState, databaseState, _) {
+          if (detailState.state == ResultState.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state.state == ResultState.hasData) {
-            var restaurant = state.result.detailRestaurant;
-            return _buildDetail(context, restaurant);
-          } else if (state.state == ResultState.noData) {
+          } else if (detailState.state == ResultState.hasData) {
+            var restaurant = detailState.result.detailRestaurant;
+            return _buildDetail(context, restaurant, databaseState);
+          } else if (detailState.state == ResultState.noData) {
             return Center(
               child: Material(
-                child: Text(state.message),
+                child: Text(detailState.message),
               ),
             );
-          } else if (state.state == ResultState.error) {
+          } else if (detailState.state == ResultState.error) {
             return SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -53,7 +58,8 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Scaffold _buildDetail(BuildContext context, DetailRestaurant restaurant) {
+  Scaffold _buildDetail(BuildContext context, DetailRestaurant restaurant,
+      DatabaseProvider databaseState) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -79,13 +85,55 @@ class DetailPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: CircleAvatar(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.white,
                       child: IconButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         icon: const Icon(Icons.arrow_back_ios_new),
-                        color: Colors.white,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: FutureBuilder(
+                          future: databaseState.isBookmarked(restaurant.id),
+                          builder: (context, snapshot) {
+                            var isBookmarked = snapshot.data ?? false;
+                            return IconButton(
+                              onPressed: () {
+                                if (isBookmarked) {
+                                  databaseState.removeBookmark(restaurant.id);
+                                } else {
+                                  databaseState.addBookmark(
+                                    Restaurant(
+                                      id: restaurant.id,
+                                      name: restaurant.name,
+                                      description: restaurant.description,
+                                      city: restaurant.city,
+                                      rating: restaurant.rating,
+                                      pictureId: restaurant.pictureId,
+                                    ),
+                                  );
+                                }
+                              },
+                              icon: isBookmarked
+                                  ? const Icon(
+                                      Icons.bookmark,
+                                      color: Colors.red,
+                                    )
+                                  : const Icon(Icons.bookmark_border,
+                                      color: Colors.red),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

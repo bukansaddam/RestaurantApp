@@ -17,5 +17,5 @@ class DateTimeHelper {
     var resultTomorrow = completeFormat.parseStrict(tomorrowDateAndTime);
 
     return now.isAfter(resultToday) ? resultTomorrow : resultToday;
-  } 
+  }
 }

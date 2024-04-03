@@ -27,8 +27,7 @@ class BackgroundService {
     final NotificationHelper notificationHelper = NotificationHelper();
     var result = await ApiService().listRestaurant();
     await notificationHelper.showNotification(
-      flutterLocalNotificationsPlugin, result
-    );
+        flutterLocalNotificationsPlugin, result);
 
     _sendPort ??= IsolateNameServer.lookupPortByName(_isolateName);
     _sendPort?.send(null);

@@ -8,7 +8,7 @@ import 'package:restaurant_app/ui/widgets/card_restaurant.dart';
 class SearchPage extends StatelessWidget {
   static const routeName = "/search_page";
 
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
