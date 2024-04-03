@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restaurant_app/common/result_state.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/ui/search_page.dart';
+import 'package:restaurant_app/ui/setting_page.dart';
 import 'package:restaurant_app/ui/widgets/card_restaurant.dart';
+import 'package:restaurant_app/utils/notification_helper.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeName = "/home_page";
 
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,11 +34,21 @@ class HomePage extends StatelessWidget {
                     "Restaurant",
                     style: TextStyle(fontSize: 32),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SearchPage.routeName);
-                      },
-                      icon: const Icon(Icons.search))
+                  Wrap(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, SearchPage.routeName);
+                        },
+                        icon: const Icon(Icons.search),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, SettingPage.routeName);
+                          },
+                          icon: const Icon(Icons.settings))
+                    ],
+                  )
                 ],
               ),
               const Text(
@@ -92,5 +110,11 @@ class HomePage extends StatelessWidget {
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    selectNotificationSubject.close();
+    super.dispose();
   }
 }

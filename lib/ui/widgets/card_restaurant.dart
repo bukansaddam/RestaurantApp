@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/ui/detail_page.dart';
 
 class CardRestaurant extends StatelessWidget {
   final Restaurant restaurant;
 
-  const CardRestaurant({Key? key, required this.restaurant}): super(key: key);
+  const CardRestaurant({Key? key, required this.restaurant}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,9 @@ class CardRestaurant extends StatelessWidget {
       child: Card(
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, DetailPage.routeName, arguments: restaurant.id);
+            // Navigator.pushNamed(context, DetailPage.routeName,
+            //     arguments: restaurant.id);
+            Navigation.intentWithData(DetailPage.routeName, restaurant.id);
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

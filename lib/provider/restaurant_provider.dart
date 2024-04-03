@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/result_state.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
-
-enum ResultState { loading, noData, hasData, error }
 
 class RestaurantProvider extends ChangeNotifier {
   final ApiService apiService;
@@ -34,7 +33,7 @@ class RestaurantProvider extends ChangeNotifier {
         notifyListeners();
         return _restaurantResult = restaurant;
       }
-    } catch(e) {
+    } catch (e) {
       _state = ResultState.error;
       notifyListeners();
       return _message = "Error --> $e";
